@@ -1,0 +1,91 @@
+.controlPanel {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 400px;
+  padding: 20px;
+  background-color: #385573;
+  border-radius: 10px;
+
+  .betChoseButtons {
+    width: 100%;
+    display: flex;
+    padding: 10px 0;
+
+    button {
+      margin: 0;
+      width: 25%;
+      height: 40px;
+      background-color: #1f304b;
+      color: #ccc;
+      box-shadow: inset 2px 2px 2px #a4a4a4;
+      border: 0;
+      font-size: 1.5rem;
+    }
+    button:disabled {
+      background-color: #a4a4a4;
+    }
+    button:first-child {
+      border-bottom-left-radius: 8px;
+      border-top-left-radius: 8px;
+    }
+    button:last-child {
+      border-bottom-right-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+  }
+
+  .balance {
+    width: 100%;
+    text-align: center;
+    color: #ccc
+  }
+
+  .betValueControl {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 0;
+    button {
+      width: 10%;
+      margin: 0;
+      border: 0;
+      height: 41px;
+      background-color: #ccc;
+
+      &:first-child {
+        border-bottom-left-radius: 8px;
+        border-top-left-radius: 8px;
+      }
+      &:last-child {
+        border-bottom-right-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+    }
+    input {
+      width: 80%;
+      height: 35px;
+      margin: 0;
+      outline:none;
+      text-align: center;
+    }
+  }
+  .infoBlock {
+    widht: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #ccc;
+    padding: 10px 0;
+
+    span:last-child {
+      opacity: 0.5;
+    }
+  }
+
+  .betColorChose {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+}

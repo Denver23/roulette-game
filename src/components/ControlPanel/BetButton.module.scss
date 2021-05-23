@@ -1,0 +1,23 @@
+.betButton {
+  width: 32%;
+  padding: 10px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  &:disabled {
+    border: 0;
+
+    &>span:first-child {
+      text-decoration: line-through;
+    }
+  }
+  &>span:first-child {
+    font-size: 1rem;
+  }
+  &>span:last-child {
+    font-size: 1.5rem;
+    opacity: 0.5;
+  }
+}
