@@ -9,7 +9,6 @@ import {
   USER_BALANCE
 } from '../../constants';
 import BetButton from './BetButton';
-import { isInteger } from '../../utils/helpers';
 import { getSpineRouletteResult } from '../../webAPI/webApi';
 
 const ControlPanel = ({wheel}) => {
@@ -25,7 +24,7 @@ const ControlPanel = ({wheel}) => {
     const spinResult = await new Promise((resolve) => wheel.current.rotateWheel(result, (result) => resolve(result)));
     rotateWheelResultHandler({newBalance: balance - betValue, betColor, betValue, multipleValue, spinResult});
     setStartingGame(false);
-  }, [wheel, balance]);
+  }, [wheel, balance, betValue]);
 
   const rotateWheelResultHandler = useCallback(({newBalance, betColor, betValue, multipleValue, spinResult}) => {
     if (betColor === spinResult.color) changeBalance(newBalance + (betValue*multipleValue));
@@ -37,13 +36,13 @@ const ControlPanel = ({wheel}) => {
   }, []);
 
   const onChangeValue = useCallback((e) => {
-    if (!e || !isInteger(e.target.value) || e.target.value < MIN_BET || e.target.value > balance || e.target.value > MAX_BET) return;
+    if (!e || !Number.isInteger(+e.target.value) || +e.target.value < MIN_BET || +e.target.value > balance || +e.target.value > MAX_BET) return;
     setBetValue(e.target.value);
-  }, []);
+  }, [betValue, balance]);
 
   const betButtonHandler = useCallback((value) => {
     onChangeValue({target: {value: value ? betValue + 1 : betValue - 1}})
-  }, []);
+  }, [betValue]);
 
   const changeBalance = useCallback((value) => {
     setBalance(value);
@@ -67,7 +66,7 @@ const ControlPanel = ({wheel}) => {
     <section className={style.betChoseButtons}>
       <button
         onClick={() => {onChangeValue({target: {value: 1}})}}
-        disabled={balance < MIN_BET || isGameStarting}
+        disabled={ balance < MIN_BET || isGameStarting}
       >
         Мин
       </button>
@@ -78,7 +77,7 @@ const ControlPanel = ({wheel}) => {
         х2
       </button>
       <button
-        onClick={() => {onChangeValue({target: {value: (balance/2).toFixed() > 1 ? (balance/2).toFixed() : 1}})}}
+        onClick={() => {onChangeValue({target: {value: (balance/2).toFixed() > 1 ? +(balance/2).toFixed() : 1}})}}
         disabled={balance < MIN_BET || isGameStarting}
       >
         1/2
@@ -110,21 +109,21 @@ const ControlPanel = ({wheel}) => {
         betValue={betValue}
         multipleValue={RED_COLOR_MULTIPLE}
         backgroundColor={RED_COLOR_VALUE}
-        disabled={balance < MIN_BET || isGameStarting}
+        disabled={betValue > balance || balance < MIN_BET || isGameStarting}
       />
       <BetButton
         onClick={() => {spinButtonClickHandler(GREEN_COLOR_MULTIPLE, GREEN_COLOR_VALUE)}}
         betValue={betValue}
         multipleValue={GREEN_COLOR_MULTIPLE}
         backgroundColor={GREEN_COLOR_VALUE}
-        disabled={balance < MIN_BET || isGameStarting}
+        disabled={betValue > balance || balance < MIN_BET || isGameStarting}
       />
       <BetButton
         onClick={() => {spinButtonClickHandler(BLACK_COLOR_MULTIPLE, BLACK_COLOR_VALUE)}}
         betValue={betValue}
         multipleValue={BLACK_COLOR_MULTIPLE}
         backgroundColor={BLACK_COLOR_VALUE}
-        disabled={balance < MIN_BET || isGameStarting}
+        disabled={betValue > balance || balance < MIN_BET || isGameStarting}
       />
     </section>
   </form>
